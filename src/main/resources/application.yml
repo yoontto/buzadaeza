@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/buzadaeza?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: qwer4321!
+  jpa:
+    hibernate:
+      ddl-auto: update   # ??? update? ?? ??? ???? ??? ?? ??
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  sql:
+    init:
+      mode: never
+server:
+  port: 8080
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    com.fasterxml.jackson.databind: DEBUG

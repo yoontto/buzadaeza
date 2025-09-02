@@ -1,0 +1,12 @@
+### GET request to example server
+POST http://localhost:8080/api/txns
+Content-Type: application/json
+
+{
+  "merchant": "사랑해베이글",
+  "amount": 3000,
+  "paymentMethod": "CREDIT_CARD"
+}
+
+
+###
