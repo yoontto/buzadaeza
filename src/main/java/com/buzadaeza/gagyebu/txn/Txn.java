@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity @Table(name = "txn")
 @Getter @Setter
@@ -15,9 +16,11 @@ public class Txn {
     @Column(nullable = false, length = 120)
     private String merchant;   // 사용처
 
+    @ElementCollection(targetClass = PaymentMethod.class)
+    @CollectionTable(name = "txn_payment_methods", joinColumns = @JoinColumn(name = "txn_id"))
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private PaymentMethod paymentMethod;       // 결제수단
+    @Column(name = "payment_method", nullable = false, length = 20)
+    private List<PaymentMethod> paymentMethods;       // 결제수단들 (최대 4개)
 
     @Column(nullable = false)
     private Long amount;       // 금액(원, 정수)

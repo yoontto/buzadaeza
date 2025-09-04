@@ -1,12 +1,19 @@
-### GET request to example server
+### Create Txn with multiple payment methods (max 4)
 POST http://localhost:8080/api/txns
 Content-Type: application/json
 
 {
   "merchant": "사랑해베이글",
   "amount": 3000,
-  "paymentMethod": "CREDIT_CARD"
+  "paymentMethods": ["CASH", "CREDIT_CARD"]
 }
 
-
-###
+### Invalid: more than 4 methods -> expect 400
+# POST http://localhost:8080/api/txns
+# Content-Type: application/json
+#
+# {
+#   "merchant": "테스트",
+#   "amount": 1000,
+#   "paymentMethods": ["CASH","CREDIT_CARD","CASH_CARD","PRE_PAID_CARD","CASH"]
+# }
