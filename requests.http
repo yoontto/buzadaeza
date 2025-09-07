@@ -1,19 +1,36 @@
-### Create Txn with multiple payment methods (max 4)
+### Create Txn - 단일 결제 (최소 예시)
+POST http://localhost:8080/api/txns
+Content-Type: application/json
+
+{
+  "merchant": "편의점",
+  "amount": 1500,
+  "memo": "물 사먹음",
+  "usedAt": "2025-09-07T09:00:00",
+  "payments": [
+    { "method": "현금", "amount": 1500, "seqNo": 1 }
+  ]
+}
+
+### Create Txn - 복합 결제 (최대 3개)
 POST http://localhost:8080/api/txns
 Content-Type: application/json
 
 {
   "merchant": "사랑해베이글",
+  "memo": "아침 식사",
+  "usedAt": "2025-09-07T08:30:00",
   "amount": 3000,
-  "paymentMethods": ["CASH", "CREDIT_CARD"]
+  "platformCode": "네이버페이",
+  "payments": [
+    { "method": "카드", "amount": 1000, "seqNo": 1 },
+    { "method": "현금", "amount": 2000, "seqNo": 2 }
+  ]
 }
 
-### Invalid: more than 4 methods -> expect 400
-# POST http://localhost:8080/api/txns
-# Content-Type: application/json
-#
-# {
-#   "merchant": "테스트",
-#   "amount": 1000,
-#   "paymentMethods": ["CASH","CREDIT_CARD","CASH_CARD","PRE_PAID_CARD","CASH"]
-# }
+
+### 참고
+# method 값(enum): CARD, DEBIT, CASH, ACCOUNT, POINT
+# platformCode(선택): NAVERPAY, KAKAOPAY, TOSS
+# payments[].seqNo: 1~3, 거래 내 중복 불가
+# amount 합계 = 상단 amount 와 일치해야 함
