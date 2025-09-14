@@ -14,9 +14,6 @@ public class Txn {
     @Column(name = "txn_id")
     private Long id;
 
-//    @Column(name = "payer_name", length = 100)
-//    private String payerName;  // 결제자 이름 (옵션)
-
     @Column(nullable = false, length = 120)
     private String merchant;   // 사용처
 
@@ -25,6 +22,9 @@ public class Txn {
 
     @Column(name = "total_amount", nullable = false)
     private Long amount;       // 총 지출액(원, 정수)
+
+    @Column(name = "platform_code", nullable = false)
+    private Long platformCode; // 플랫폼
 
     @Column(length = 500)
     private String memo;
@@ -37,4 +37,7 @@ public class Txn {
 
     @PrePersist
     void onCreate() { this.createdAt = LocalDateTime.now(); }
+
+    public void setPlatformCode() {
+    }
 }

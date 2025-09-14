@@ -13,12 +13,12 @@ public class TxnController {
 
     private final TxnRepository repo;
     private final PaymentMethodCodeRepository methodRepo;
-    private final PaymentPlatformRepository platformRepo;
+    private final PlatformCodeRepository platformRepo;
     private final TxnRequestValidator validator;
 
     public TxnController(TxnRepository repo,
                          PaymentMethodCodeRepository methodRepo,
-                         PaymentPlatformRepository platformRepo,
+                         PlatformCodeRepository platformRepo,
                          TxnRequestValidator validator) {
         this.repo = repo;
         this.methodRepo = methodRepo;
@@ -37,9 +37,9 @@ public class TxnController {
         Txn t = new Txn();
         t.setMerchant(req.merchant());
         t.setAmount(req.amount());
-        //t.setPayerName(req.payerName());
         t.setMemo(req.memo());
         t.setUsedAt(req.usedAt());
+        t.setPlatformCode();
 
         for (CreateTxnRequest.PaymentDetail p : payments) {
             TxnPayment tp = new TxnPayment();
@@ -47,11 +47,6 @@ public class TxnController {
             var method = methodRepo.findByCode(p.method().getCode())
                     .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 결제수단 코드: " + p.method().getCode()));
             tp.setMethod(method);
-            if (p.platformCode() != null && !p.platformCode().isBlank()) {
-                var platform = platformRepo.findByCode(p.platformCode())
-                        .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 결제 플랫폼 코드: " + p.platformCode()));
-                tp.setPlatform(platform);
-            }
             tp.setAmount(p.amount());
             tp.setSeqNo(p.seqNo());
             t.getPayments().add(tp);

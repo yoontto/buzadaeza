@@ -1,7 +1,6 @@
 package com.buzadaeza.gagyebu.txn;
 
 import com.buzadaeza.gagyebu.common.PaymentMethodCode;
-import com.buzadaeza.gagyebu.common.PaymentPlatform;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,10 +24,6 @@ public class TxnPayment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "method_id", nullable = false)
     private PaymentMethodCode method;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "platform_id")
-    private PaymentPlatform platform; // nullable
 
     @Column(name = "amount", nullable = false)
     private Long amount;

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "payment_platform")
 @Getter @Setter
-public class PaymentPlatform {
+public class PaymentPlatformCode {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "platform_id")
     private Long id;
